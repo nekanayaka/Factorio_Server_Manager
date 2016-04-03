@@ -23,7 +23,7 @@
     <h3>Savegame list</h3>
     <ul>
       {% for savegame in all_savegames %}
-      <li>{{savegame}}</li>
+      <li>{{savegame}} &#09; <a href="{{url_for('deleteSave', savegame = savegame)}}">delete</a></li>
       {% endfor %}
     </ul>
   </div>

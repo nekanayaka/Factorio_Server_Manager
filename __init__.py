@@ -65,6 +65,16 @@ def uploadMod():
     #return redirect(url_for('uploaded_file', filename = file.filename))
     return redirect(url_for('control'))
 
+@app.route('/deleteSaves/<savegame>')
+def deleteSave(savegame):
+    os.remove(app.config['UPLOAD_FOLDER'] + "savegames/" + savegame)
+    return redirect(url_for('control'))
+    
+@app.route('/deleteMods/<mod>')
+def deleteMod(mod):
+    os.remove(app.config['UPLOAD_FOLDER'] + "mods/" + mod)
+    return redirect(url_for('control'))
+
 # if wants to download
 """
 @app.route('/static/uploads/<filename>')
