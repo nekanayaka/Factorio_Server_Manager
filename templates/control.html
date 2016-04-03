@@ -14,11 +14,17 @@
       <input type="file" name="savegame" id="savegame"><br />
       <input type="submit" name="submit" value="Upload">
   </form>
+  {% if error %}
+    <p>{{error}}</p>
+  {% endif %}
   <form action="uploadMods" method="post" enctype="multipart/form-data" id="uploadMods">
     <label for="mod">Select the mod zip file to upload</label><br />
     <input type="file" name="mod" id="mod"><br />
     <input type="submit" name="submit" value="Upload">
   </form>
+  {% if error %}
+    <p>{{error}}</p>
+  {% endif %}
   <div>
     <h3>Savegame list</h3>
     <ul>

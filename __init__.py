@@ -7,6 +7,7 @@ app = Flask(__name__)
 app.secret_key = 'pL1+Pl0HJYRaJC7OQp6QxX7yaq90MwxFpqKBNy4hLwY='
 
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
+app.config['ALLOWED_EXTENSIONS'] = set(['zip'])
 
 def login_required(f):
     @wraps(f)
@@ -17,6 +18,10 @@ def login_required(f):
             flash('Admin only area!')
             return redirect(url_for('index'))
     return wrap
+    
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 @app.route('/')
 def index():
@@ -54,16 +59,24 @@ def logout():
 @app.route('/uploadSavegame', methods=['POST'])
 def uploadSave():
     file = request.files['savegame']
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'] + "/savegames", file.filename))
-    #return redirect(url_for('uploaded_file', filename = file.filename))
-    return redirect(url_for('control'))
+    if file and allowed_file(file.filename):
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'] + "/savegames", file.filename))
+        #return redirect(url_for('uploaded_file', filename = file.filename))
+        return redirect(url_for('control'))
+    else:
+        error = "Invalid file type"
+        return redirect(url_for('control', error = error))
     
 @app.route('/uploadMods', methods=['POST'])
 def uploadMod():
     file = request.files['mod']
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'] + "/mods", file.filename))
-    #return redirect(url_for('uploaded_file', filename = file.filename))
-    return redirect(url_for('control'))
+    if file and allowed_file(file.filename):
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'] + "/mods", file.filename))
+        #return redirect(url_for('uploaded_file', filename = file.filename))
+        return redirect(url_for('control'))
+    else:
+        error = "Invalid file type"
+        return redirect(url_for('control', error = error))
 
 @app.route('/deleteSaves/<savegame>')
 def deleteSave(savegame):
@@ -85,4 +98,4 @@ def uploaded_file(filename):
 app.run(host = os.getenv('IP', '0.0.0.0'), port = int(os.getenv('PORT', 8080)), debug = True)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
