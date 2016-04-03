@@ -38,7 +38,11 @@ def loginSubmit():
 @app.route('/control')
 @login_required
 def control():
-    return render_template('control.html')
+    savegames_path = app.config['UPLOAD_FOLDER'] + "savegames"
+    mods_path = app.config['UPLOAD_FOLDER'] + "mods"
+    all_savegames = os.listdir(savegames_path)
+    all_mods = os.listdir(mods_path)
+    return render_template('control.html', all_savegames = all_savegames, all_mods = all_mods)
     
 @app.route('/logout')
 @login_required
@@ -52,14 +56,14 @@ def uploadSave():
     file = request.files['savegame']
     file.save(os.path.join(app.config['UPLOAD_FOLDER'] + "/savegames", file.filename))
     #return redirect(url_for('uploaded_file', filename = file.filename))
-    return redirect(url_for('index'))
+    return redirect(url_for('control'))
     
 @app.route('/uploadMods', methods=['POST'])
 def uploadMod():
     file = request.files['mod']
     file.save(os.path.join(app.config['UPLOAD_FOLDER'] + "/mods", file.filename))
     #return redirect(url_for('uploaded_file', filename = file.filename))
-    return redirect(url_for('index'))
+    return redirect(url_for('control'))
 
 # if wants to download
 """

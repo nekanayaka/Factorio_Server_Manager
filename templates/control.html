@@ -19,5 +19,21 @@
     <input type="file" name="mod" id="mod"><br />
     <input type="submit" name="submit" value="Upload">
   </form>
+  <div>
+    <h3>Savegame list</h3>
+    <ul>
+      {% for savegame in all_savegames %}
+      <li>{{savegame}}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div>
+    <h3>Mods list</h3>
+    <ul>
+      {% for mod in all_mods %}
+      <li>{{mod}}</li>
+      {% endfor %}
+    </ul>
+  </div>
 </body>
 </html>
