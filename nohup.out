@@ -1,0 +1,27 @@
+   0.000 2016-04-04 15:33:57; Factorio 0.12.29 (Build 17931, linux64, headless)
+   0.059 Operating system: Linux (LinuxMint 17.3)
+   0.060 Program arguments: "/home/nimna/Desktop/factorio/bin/x64/./factorio" "--disallow-commands" "--start-server" "SAVE.zip" 
+   0.060 Read data path: /home/nimna/Desktop/factorio/data
+   0.060 Write data path: /home/nimna/Desktop/factorio
+   0.060 Binaries path: /home/nimna/Desktop/factorio/bin
+   0.072 Running in headless mode
+   0.076 Loading mod core 0.0.0 (data.lua)
+   0.080 Loading mod base 0.12.29 (data.lua)
+   0.418 Factorio initialised
+   0.419 Info Router.cpp:507: Router peerID(65535) shutting down.
+   0.419 Info Router.cpp:534: Router state -> Disconnected
+   0.419 Info MultiplayerManager.cpp:912: networkTick(0) mapTick(-1) changing state from(Ready) to(PreparedToHostGame)
+   0.420 Info MultiplayerManager.cpp:912: networkTick(0) mapTick(-1) changing state from(PreparedToHostGame) to(CreatingGame)
+   0.420 Loading map /home/nimna/Desktop/factorio/saves/SAVE.zip
+   0.444 Info Scenario.cpp:124: Map version 0.12.29-0
+   0.480 Info MultiplayerManager.cpp:281: 0x7fd27c44cff0, (nil)
+   0.480 Info PosixUDPSocket.cpp:34: Opening socket at port 34197
+   0.480 Info Router.cpp:534: Router state -> Connected
+   0.480 Info Synchronizer.cpp:54: NetworkTick(0) initialized Synchronizer local peer(0) latency(6).
+   0.481 Hosting game at port 34197, peerID 0, session magic 1335
+   0.481 Info MultiplayerManager.cpp:303: 0x7fd27c44cff0, 0x7fd27c44cff0
+   0.481 Info MultiplayerManager.cpp:912: networkTick(0) mapTick(0) changing state from(CreatingGame) to(InGame)
+   0.481 Info NetworkInputHandler.cpp:45: mapTick(0) networkTick(0) initialized NetworkInputHandler local peer(0).
+   0.598 Info MultiplayerManager.cpp:1411: Received peer info for peer(0) username(<server>).
+   0.598 Info MultiplayerManager.cpp:1059: networkTick(6) mapTick(0) received stateChanged peerID(0) oldState(Ready) newState(CreatingGame)
+   0.598 Info MultiplayerManager.cpp:1059: networkTick(6) mapTick(0) received stateChanged peerID(0) oldState(CreatingGame) newState(InGame)

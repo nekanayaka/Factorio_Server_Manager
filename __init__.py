@@ -130,9 +130,19 @@ def extractArchive(zipFile):
 def runGame(savegame):
     # factorio installation path
     #subprocess.call(["~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server " + savegame])
-    os.spawnl(os.P_NOWAIT, '~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server' + savegame)
-    #os.system('~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame)
+    #subprocess.Popen("~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server " + savegame, stdout=subprocess.PIPE, shell=True)
+    #os.spawnl(os.P_NOWAIT, "~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server " + savegame)
+    os.system('~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame + "&")
+    #os.system('gnome-terminal -e ~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame)
     #print('~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame)
+    return redirect(url_for('control'))
+
+@app.route('/stopGame')
+def stopGame():
+    #works for multiple running instances of factorio. just has to grep the unique savename
+    os.system("kill -9 `ps aux | grep factorio | grep -v grep | awk '{print $2}'`")
+    #works if only one version of factorio running
+    #os.system("kill -9 pidof factorio")
     return redirect(url_for('control'))
 
 # if wants to download
