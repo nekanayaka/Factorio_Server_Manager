@@ -1,4 +1,5 @@
 import os
+import shutil
 from flask import *
 from functools import wraps
 
@@ -47,7 +48,11 @@ def control():
     mods_path = app.config['UPLOAD_FOLDER'] + "mods"
     all_savegames = os.listdir(savegames_path)
     all_mods = os.listdir(mods_path)
-    return render_template('control.html', all_savegames = all_savegames, all_mods = all_mods)
+    for file in os.listdir(mods_path):
+        if file.endswith(".zip"):
+            all_zipped = []
+            all_zipped.append(file)
+    return render_template('control.html', all_savegames = all_savegames, all_mods = all_mods, all_zipped = all_zipped)
     
 @app.route('/logout')
 @login_required
@@ -67,7 +72,7 @@ def uploadSave():
         error = "Invalid file type"
         return redirect(url_for('control', error = error))
     
-@app.route('/uploadMods', methods=['POST'])
+@app.route('/uploadMods', methods=['GET', 'POST'])
 def uploadMod():
     file = request.files['mod']
     if file and allowed_file(file.filename):
@@ -86,6 +91,11 @@ def deleteSave(savegame):
 @app.route('/deleteMods/<mod>')
 def deleteMod(mod):
     os.remove(app.config['UPLOAD_FOLDER'] + "mods/" + mod)
+    return redirect(url_for('control'))
+    
+@app.route('/deleteModFolder/<mod_folder>')
+def deleteFolder(mod_folder):
+    shutil.rmtree(app.config['UPLOAD_FOLDER'] + "mods/" + mod_folder)
     return redirect(url_for('control'))
 
 # if wants to download
