@@ -24,8 +24,9 @@ def login_required(f):
         if 'logged_in' in session:
             return f(*args, **kwargs)
         else:
-            flash('Admin only area!')
-            return redirect(url_for('index'))
+            #flash('Admin only area!')
+            error = "Admin only area!"
+            return redirect(url_for('index', error=error))
     return wrap
     
 def allowed_file(filename):
