@@ -1,5 +1,8 @@
 import os
 import shutil
+import zipfile
+import glob
+from os.path import *
 from flask import *
 from functools import wraps
 
@@ -24,6 +27,12 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
+"""
+def get_directories(a_dir):
+    return [name for name in os.listdir(a_dir)
+            if os.path.isdir(os.path.join(a_dir, name))]
+"""
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -47,12 +56,16 @@ def control():
     savegames_path = app.config['UPLOAD_FOLDER'] + "savegames"
     mods_path = app.config['UPLOAD_FOLDER'] + "mods"
     all_savegames = os.listdir(savegames_path)
-    all_mods = os.listdir(mods_path)
+    all_folders = filter(os.path.isdir, os.listdir(mods_path))
+    """
     for file in os.listdir(mods_path):
         if file.endswith(".zip"):
-            all_zipped = []
-            all_zipped.append(file)
-    return render_template('control.html', all_savegames = all_savegames, all_mods = all_mods, all_zipped = all_zipped)
+            all_mods = []
+            all_mods.append(file)
+    """
+    all_zipped = glob.glob(mods_path + '/*.zip')
+    all_mods = [basename(mod_zip) for mod_zip in all_zipped]
+    return render_template('control.html', all_savegames = all_savegames, all_folders = all_folders, all_mods = all_mods)
     
 @app.route('/logout')
 @login_required
@@ -96,6 +109,13 @@ def deleteMod(mod):
 @app.route('/deleteModFolder/<mod_folder>')
 def deleteFolder(mod_folder):
     shutil.rmtree(app.config['UPLOAD_FOLDER'] + "mods/" + mod_folder)
+    return redirect(url_for('control'))
+    
+@app.route('/extractArchive/<zipFile>')
+def extractArchive(zipFile):
+    file_unzip = zipfile.ZipFile(app.config['UPLOAD_FOLDER'] + "mods/" + zipFile, 'r')
+    file_unzip.extractall(app.config['UPLOAD_FOLDER'] + "mods/")
+    file_unzip.close()
     return redirect(url_for('control'))
 
 # if wants to download

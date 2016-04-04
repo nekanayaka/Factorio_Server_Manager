@@ -37,14 +37,10 @@
     <h3>Mods list</h3>
     <ul>
       {% for mod in all_mods %}
-        {% for mod_zip in all_zipped %}
-          {% if mod == mod_zip %}
-            <li>{{mod}} &#09; <a href="{{url_for('deleteMod', mod = mod)}}">delete</a> &#09; </li>
-          {% endif %}
-          {% if mod != mod_zip %}
-            <li>{{mod}} &#09; <a href={{url_for('deleteFolder', mod_folder = mod)}}>delete folder</a></li>
-          {% endif %}
-        {% endfor %}
+        <li>{{mod}} &#09; <a href="{{url_for('deleteMod', mod = mod)}}">delete</a> &#09; <a href="{{url_for('extractArchive', zipFile = mod)}}">extract</a></li>
+      {% endfor %}
+      {% for mod_folder in all_folders %}
+        <li>{{mod_folder}} &#09; <a href="{{url_for('deleteFolder', mod_folder = mod_folder)}}">delete</a></li>
       {% endfor %}
     </ul>
   </div>
