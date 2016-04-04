@@ -5,6 +5,7 @@
     <link href="/static/css/css.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+  {% if error %}
   <script>
     function getQueryVariable(variable)
       {
@@ -19,6 +20,7 @@
         return(false);
       }
     alert(getQueryVariable("error"));
+    {% endif %}
   </script>
   <img src="/static/images/factoriologo.jpg" alt=""/>
   <div id="adminPanel">
