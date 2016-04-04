@@ -5,8 +5,12 @@
     <link href="/static/css/css.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+  <img src="/static/images/factoriologo.jpg" alt=""/>
+  <div id="adminPanel">
+    <a href="{{url_for('login')}}">Admin Login</a><br /><br />
+    <a href="{{url_for('control')}}">Control Panel</a>
+  </div>
   <div id="header">
-    <img src="/static/images/factoriologo.jpg" alt=""/><a href="{{url_for('login')}}" style="text-align: right">Admin Login</a>
     <h1>Factorio Server Stats</h1>
   </div>
 </body>

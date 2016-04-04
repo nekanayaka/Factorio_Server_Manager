@@ -1,5 +1,9 @@
 #header {
-    text-align: center
+    text-align: center;
+}
+
+#adminPanel {
+    float: right;
 }
 
 #uploadSavegame {

@@ -1,3 +1,8 @@
+"""
+Programmer: Nimna Ekanayaka
+Date: April 4, 2016
+Purpose: Factorio server manager and user interface
+"""
 import os
 import shutil
 import zipfile
@@ -56,7 +61,7 @@ def control():
     savegames_path = app.config['UPLOAD_FOLDER'] + "savegames"
     mods_path = app.config['UPLOAD_FOLDER'] + "mods"
     all_savegames = os.listdir(savegames_path)
-    all_folders = filter(os.path.isdir, os.listdir(mods_path))
+    all_folders = os.walk(mods_path).next()[1]
     """
     for file in os.listdir(mods_path):
         if file.endswith(".zip"):
@@ -116,6 +121,13 @@ def extractArchive(zipFile):
     file_unzip = zipfile.ZipFile(app.config['UPLOAD_FOLDER'] + "mods/" + zipFile, 'r')
     file_unzip.extractall(app.config['UPLOAD_FOLDER'] + "mods/")
     file_unzip.close()
+    return redirect(url_for('control'))
+    
+@app.route('/runGame/<savegame>')
+def runGame(savegame):
+    # factorio installation path
+    os.system('~/workspace/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame)
+    #print('~/workspace/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame)
     return redirect(url_for('control'))
 
 # if wants to download

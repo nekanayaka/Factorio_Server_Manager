@@ -5,9 +5,13 @@
     <link href="/static/css/css.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-  <img src="/static/images/factoriologo.jpg" alt=""/>
+  <img src="/static/images/factoriologo.jpg" alt=""/><br />
+  <a href="{{url_for('index')}}">Homepage</a>
+  <div id="adminPanel">
+    <a href="{{url_for('logout')}}">Logout</a>
+  </div>
   <div id="header">
-    <h1>Control Panel</h1><a href="{{url_for('logout')}}" style="text-align: right">Logout</a>
+    <h1>Control Panel</h1>
   </div>
   <form action="uploadSavegame" method="post" enctype="multipart/form-data" id="uploadSavegame">
       <label for="savegame">Select the save file to upload</label><br />
@@ -29,7 +33,7 @@
     <h3>Savegame list</h3>
     <ul>
       {% for savegame in all_savegames %}
-        <li>{{savegame}} &#09; <a href="{{url_for('deleteSave', savegame = savegame)}}">delete</a></li>
+        <li>{{savegame}} &#09; <a href="{{url_for('deleteSave', savegame = savegame)}}">delete</a> &#09; <a href="{{url_for('runGame', savegame = savegame)}}">run</a></li>
       {% endfor %}
     </ul>
   </div>
@@ -40,9 +44,12 @@
         <li>{{mod}} &#09; <a href="{{url_for('deleteMod', mod = mod)}}">delete</a> &#09; <a href="{{url_for('extractArchive', zipFile = mod)}}">extract</a></li>
       {% endfor %}
       {% for mod_folder in all_folders %}
-        <li>{{mod_folder}} &#09; <a href="{{url_for('deleteFolder', mod_folder = mod_folder)}}">delete</a></li>
+        <li>{{mod_folder}} &#09; <a href="{{url_for('deleteFolder', mod_folder = mod_folder)}}">delete folder</a></li>
       {% endfor %}
     </ul>
   </div>
+  <!--<div>-->
+  <!--  <h3></h3>-->
+  <!--</div>-->
 </body>
 </html>
