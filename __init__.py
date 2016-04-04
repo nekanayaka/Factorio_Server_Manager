@@ -130,7 +130,8 @@ def extractArchive(zipFile):
 def runGame(savegame):
     # factorio installation path
     #subprocess.call(["~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server " + savegame])
-    os.system('~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame)
+    os.spawnl(os.P_NOWAIT, '~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server' + savegame)
+    #os.system('~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame)
     #print('~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame)
     return redirect(url_for('control'))
 
