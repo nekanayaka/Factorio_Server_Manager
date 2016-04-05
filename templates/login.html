@@ -5,17 +5,17 @@
     <link href="/static/css/css.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-  <div>
-    <form action="loginSubmit" method="post">
-      <label for="username">Admin username</label><br />
-      <input type="text" name="username" id="username"><br />
-      <label for="password">Admin password</label><br />
-      <input type="password" name="password" id="password"><br />
-      <input type="submit" name="submit" value="Login">
+  <div class="wrapper">
+    <form action="loginSubmit" method="post" class="form-signin">
+      <input type="text" class="form-control" placeholder="Admin Username" name="username" id="username"><br />
+      <input type="password" class="form-control" placeholder="Admin Password" name="password" id="password"><br />
+      <input type="submit" class="btn-style" name="submit" value="Login">
     </form>
   </div>
+  <div id="error">
   {% if error %}
     <p>{{error}}</p>
   {% endif %}
+  </div>
 </body>
 </html>
