@@ -29,28 +29,27 @@
   <div id="header">
     <h1>Control Panel</h1>
   </div>
-  <form action="uploadSavegame" method="post" enctype="multipart/form-data" id="uploadSavegame">
+  <form action="uploadSavegame" method="post" enctype="multipart/form-data" id="uploadSave">
       <label for="savegame">Select the save file to upload</label><br />
       <input type="file" name="savegame" id="savegame"><br />
-      <input type="submit" name="submit" value="Upload">
-  </form>
-  <form action="uploadMods" method="post" enctype="multipart/form-data" id="uploadMods">
+      <input type="submit" name="submit" class="btn-style" value="Upload">
+  </form><br />
+  <form action="uploadMods" method="post" enctype="multipart/form-data" id="uploadMod">
     <label for="mod">Select the mod zip file to upload</label><br />
     <input type="file" name="mod" id="mod"><br />
-    <input type="submit" name="submit" value="Upload">
-  </form>
+    <input type="submit" name="submit" class="btn-style" value="Upload">
+  </form><br />
     {% if error%}
       <script>alert(getQueryVariable("error"));</script>
     {% endif %}
-  <div>
+  <div id="lists" style="text-align: left;">
     <h3>Savegame list</h3>
     <ul>
       {% for savegame in all_savegames %}
         <li>{{savegame}} &#09; <a href="{{url_for('deleteSave', savegame = savegame)}}">delete</a> &#09; <a href="{{url_for('runGame', savegame = savegame)}}">run</a></li>
       {% endfor %}
     </ul>
-  </div>
-  <div>
+
     <h3>Mods list</h3>
     <ul>
       {% for mod in all_mods %}
@@ -61,9 +60,9 @@
       {% endfor %}
     </ul>
   </div>
-  <div>
+  <div id="stopGame">
     <h3>Stop the game</h3>
-    <a href="{{url_for('stopGame')}}"><input type="button" name="" value="Stop Game"/></a>
+    <a href="{{url_for('stopGame')}}"><input type="button" name="" class="btn-style-serious" value="Stop Game"/></a>
   </div>
 </body>
 </html>

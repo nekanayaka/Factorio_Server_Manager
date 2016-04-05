@@ -101,7 +101,7 @@ def uploadMod():
         #return redirect(url_for('uploaded_file', filename = file.filename))
         return redirect(url_for('control'))
     else:
-        error = "Invalid file type"
+        error = "Invalid file type!"
         return redirect(url_for('control', error = error))
 
 @app.route('/deleteSaves/<savegame>')
@@ -128,19 +128,16 @@ def extractArchive(zipFile):
 
 @app.route('/runGame/<savegame>')
 def runGame(savegame):
-    # factorio installation path
-    #subprocess.call(["~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server " + savegame])
-    #subprocess.Popen("~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server " + savegame, stdout=subprocess.PIPE, shell=True)
-    #os.spawnl(os.P_NOWAIT, "~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server " + savegame)
+    global savegame_running
+    savegame_running = savegame
     os.system('~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame + "&")
-    #os.system('gnome-terminal -e ~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame)
-    #print('~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame)
     return redirect(url_for('control'))
 
 @app.route('/stopGame')
 def stopGame():
     #works for multiple running instances of factorio. just has to grep the unique savename
-    os.system("kill -9 `ps aux | grep factorio | grep -v grep | awk '{print $2}'`")
+    os.system("kill -9 `ps aux | grep " +  savegame_running + " | grep -v grep | awk '{print $2}'`")
+    #print("kill -9 `ps aux | grep " +  savegame_running + " | grep -v grep | awk '{print $2}'`")
     #works if only one version of factorio running
     #os.system("kill -9 pidof factorio")
     return redirect(url_for('control'))
