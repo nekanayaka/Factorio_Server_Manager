@@ -51,7 +51,7 @@ def login():
 
 @app.route('/loginSubmit', methods=['POST'])
 def loginSubmit():
-    if request.form['username'] == 'admin' and request.form['password'] == 'admin':
+    if request.form['username'] == 'admin' and request.form['password'] == 'opensesame':
         session['logged_in'] = True
         return redirect(url_for('control'))
     else:
@@ -130,7 +130,7 @@ def extractArchive(zipFile):
 def runGame(savegame):
     global savegame_running
     savegame_running = savegame
-    os.system('~/Desktop/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame + "&")
+    os.system('~/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame + "&")
     return redirect(url_for('control'))
 
 @app.route('/stopGame')
@@ -152,4 +152,4 @@ def uploaded_file(filename):
 #app.run(host = os.getenv('IP', '0.0.0.0'), port = int(os.getenv('PORT', 8080)), debug = True)
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(host='0.0.0.0')

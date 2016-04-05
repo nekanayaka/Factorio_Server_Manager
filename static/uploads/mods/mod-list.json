@@ -1,0 +1,28 @@
+{
+    "mods": [
+        {
+            "name": "base",
+            "enabled": "true"
+        },
+        {
+            "name": "EvoGUI",
+            "enabled": "true"
+        },
+        {
+            "name": "FactorioBasics-Core",
+            "enabled": "true"
+        },
+        {
+            "name": "FactorioBasics-Power",
+            "enabled": "true"
+        },
+        {
+            "name": "Larger Inventory",
+            "enabled": "true"
+        },
+        {
+            "name": "UpGrade",
+            "enabled": "true"
+        }
+    ]
+}
