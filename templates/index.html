@@ -5,30 +5,32 @@
     <link href="/static/css/css.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-  {% if error %}
-  <script>
-    function getQueryVariable(variable)
-      {
-        var query = window.location.search.substring(1);
-        var vars = query.split("&");
-        for (var i=0;i<vars.length;i++) {
-          var pair = vars[i].split("=");
-          if(pair[0] == variable) {
-            return pair[1];
+  <div id="dynamic">
+    {% if error %}
+    <script>
+      function getQueryVariable(variable)
+        {
+          var query = window.location.search.substring(1);
+          var vars = query.split("&");
+          for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable) {
+              return pair[1];
+            }
           }
+          return(false);
         }
-        return(false);
-      }
-    alert(getQueryVariable("error"));
-    {% endif %}
-  </script>
-  <img src="/static/images/factoriologo.jpg" alt=""/>
-  <div id="adminPanel">
-    <a href="{{url_for('login')}}">Admin Login</a><br /><br />
-    <a href="{{url_for('control')}}">Control Panel</a>
-  </div>
-  <div id="header">
-    <h1>Factorio Server Stats</h1>
+      alert(getQueryVariable("error"));
+      {% endif %}
+    </script>
+    <img src="/static/images/factoriologo.jpg" alt=""/>
+    <div id="adminPanel">
+      <a href="{{url_for('login')}}">Admin Login</a><br /><br />
+      <a href="{{url_for('control')}}">Control Panel</a>
+    </div>
+    <div id="header">
+      <h1>Factorio Server Stats</h1>
+    </div>
   </div>
 </body>
 </html>

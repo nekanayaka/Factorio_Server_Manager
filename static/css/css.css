@@ -1,3 +1,7 @@
+#dynamic {
+  background-image: url('/static/images/Metal-Scratch-background.jpg');
+}
+
 #header {
     text-align: center;
 }
