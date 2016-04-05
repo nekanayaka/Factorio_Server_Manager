@@ -69,7 +69,7 @@
 	filter : progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff8c00', endColorstr='#ff3503',GradientType=0 );
 }
 
-.btn-style-serious{
+.btn-style-serious {
 	border : solid 1px #000000;
 	border-radius : 3px;
 	moz-border-radius : 3px;
@@ -88,6 +88,23 @@
 	background : linear-gradient(top, #f00303 0%, #fc0a0e 100%);
 	filter : progid:DXImageTransform.Microsoft.gradient( startColorstr='#f00303', endColorstr='#fc0a0e',GradientType=0 );
 
+}
+
+.btn-style-login {
+  background-color: rgba(49,145,224,1);
+  -webkit-box-shadow: 1px 0px 2px 0px rgba(0,0,0,1);
+  -moz-box-shadow: 1px 0px 2px 0px rgba(0,0,0,1);
+  box-shadow: 1px 0px 2px 0px rgba(0,0,0,1);
+  border: solid 3px rgba(65,150,219,0.94);
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  display: inline-block;
+  font-family: Arial;
+  color: rgba(0,0,0,1);
+  height: auto;
+  width: auto;
+  font-size: 20px;
 }
 
 .wrapper {
