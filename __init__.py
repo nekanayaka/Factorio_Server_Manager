@@ -8,6 +8,7 @@ import shutil
 import zipfile
 import glob
 import subprocess
+import commands
 from os.path import *
 from flask import *
 from functools import wraps
@@ -73,7 +74,9 @@ def control():
     """
     all_zipped = glob.glob(mods_path + '/*.zip')
     all_mods = [basename(mod_zip) for mod_zip in all_zipped]
-    return render_template('control.html', all_savegames = all_savegames, all_folders = all_folders, all_mods = all_mods)
+    game_status = commands.getstatusoutput("`ps aux | grep factorio/bin/x64 | grep -v grep | awk '{print $2}'`")
+    print game_status
+    return render_template('control.html', all_savegames = all_savegames, all_folders = all_folders, all_mods = all_mods, game_status = game_status)
 
 @app.route('/logout')
 @login_required
@@ -149,7 +152,8 @@ def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 """
 
-#app.run(host = os.getenv('IP', '0.0.0.0'), port = int(os.getenv('PORT', 8080)), debug = True)
+app.run(host = os.getenv('IP', '0.0.0.0'), port = int(os.getenv('PORT', 8080)), debug = True)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run()
+    #app.run(host='0.0.0.0')

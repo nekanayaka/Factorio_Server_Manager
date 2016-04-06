@@ -30,6 +30,9 @@
     <div id="header">
       <h1>Control Panel</h1>
     </div>
+    <div>
+      <h2>Game status: {% if game_status != "(0, '')"  %} Running {% endif %} {% if game_status == "(0, '')"  %} Not Running {% endif %}</h2>
+    </div>
     <form action="uploadSavegame" method="post" enctype="multipart/form-data" id="uploadSave">
         <label for="savegame">Select the save file to upload</label><br />
         <input type="file" name="savegame" id="savegame"><br />
