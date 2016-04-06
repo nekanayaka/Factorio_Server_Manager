@@ -21,6 +21,7 @@
   margin: 0 auto;
   border: none;
   background-color: #6FBB49;
+  border-radius: 25px; 
 }
 
 #uploadMod {
@@ -30,6 +31,7 @@
   margin: 0 auto;
   border: none;
   background-color: #6FBB49;
+  border-radius: 25px;
 }
 
 #lists {
@@ -38,6 +40,7 @@
   width: 500px;
   margin: 0 auto;
   background-color: #6371EF;
+  border-radius: 15px; 
 }
 
 #stopGame {
