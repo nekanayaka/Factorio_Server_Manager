@@ -144,15 +144,13 @@ def extractArchive(zipFile):
 
 @app.route('/runGame/<savegame>')
 def runGame(savegame):
-    global savegame_running
-    savegame_running = savegame
     os.system('~/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame + "&")
     return redirect(url_for('control'))
 
 @app.route('/stopGame')
 def stopGame():
-    #works for multiple running instances of factorio. just has to grep the unique savename
-    os.system("kill -9 `ps aux | grep " +  savegame_running + " | grep -v grep | awk '{print $2}'`")
+    #works for multiple running instances of factorio. just has to grep the unique the factorio directory path
+    os.system("kill -9 `ps aux | grep factorio/bin/x64 | grep -v grep | awk '{print $2}'`")
     #print("kill -9 `ps aux | grep " +  savegame_running + " | grep -v grep | awk '{print $2}'`")
     #works if only one version of factorio running
     #os.system("kill -9 pidof factorio")
