@@ -1,9 +1,0 @@
-{
-	"name":"UpGrade",
-	"author":"yareczek and Tardan",
-	"version":"0.0.5",
-	"title":"UpGrade",
-	"homepage":"http://www.factorioforums.com/forum/viewtopic.php?t=3607",
-	"description":"Mod add improved vanilla stuff like longer belts, pipes and electric poles.",
-	"dependencies": ["base >= 0.11.1"]
-}
