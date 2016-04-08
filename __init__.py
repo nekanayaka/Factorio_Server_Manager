@@ -29,9 +29,9 @@ def login_required(f):
         if 'logged_in' in session:
             return f(*args, **kwargs)
         else:
-            #flash('Admin only area!')
-            error = "Admin only area!"
-            return redirect(url_for('index', error=error))
+            flash('Admin only area!')
+            # error = "Admin only area!"
+            return redirect(url_for('index'))
     return wrap
 
 def allowed_file(filename):
@@ -106,8 +106,9 @@ def uploadSave():
         #return redirect(url_for('uploaded_file', filename = file.filename))
         return redirect(url_for('control'))
     else:
-        error = "Invalid file type"
-        return redirect(url_for('control', error = error))
+        # error = "Invalid file type"
+        flash("Invalid file type")
+        return redirect(url_for('control'))
 
 @app.route('/uploadMods', methods=['GET', 'POST'])
 def uploadMod():
@@ -117,8 +118,9 @@ def uploadMod():
         #return redirect(url_for('uploaded_file', filename = file.filename))
         return redirect(url_for('control'))
     else:
-        error = "Invalid file type!"
-        return redirect(url_for('control', error = error))
+        # error = "Invalid file type!"
+        flash("Invalid file type")
+        return redirect(url_for('control'))
 
 @app.route('/deleteSaves/<savegame>')
 def deleteSave(savegame):
@@ -163,7 +165,7 @@ def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 """
 
-#app.run(host = os.getenv('IP', '0.0.0.0'), port = int(os.getenv('PORT', 8080)), debug = True)
+app.run(host = os.getenv('IP', '0.0.0.0'), port = int(os.getenv('PORT', 8080)), debug = True)
 
 if __name__ == '__main__':
     app.run(debug = True)
