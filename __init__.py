@@ -52,6 +52,29 @@ def index():
         login_status = True
     else:
         login_status = False
+
+    system_output = commands.getstatusoutput("grep username ~/factorio/factorio-current.log")
+    #game_status = re.findall(r"'(.*?)'", system_output, re.DOTALL)
+    #system_output = "{}".format(system_output)
+    #game_status = system_output[system_output.find("'")+1:system_output.find("'")]
+    username_peer_dump_array = system_output[1].split()
+    #username_peer_dump = system_output[1]
+    #print str(username_peer_dump_array).strip('[]')
+    global peer
+    peer = []
+    global username
+    username = []
+    for word in username_peer_dump_array:
+            if(word.startswith('peer(') == True):
+                    word_index = username_peer_dump_array.index(word)
+                    #peer.append()
+                    peer.extend([word, username_peer_dump_array[word_index + 1]])
+    print str(peer).strip('[]')
+    #       print word
+    #for xpeer in peer:
+    #       print xpeer
+    #print system_output[1]
+    #print system_output[1].find("peer(")
     return render_template('index.html', login_status = login_status)
 
 @app.route('/login')
