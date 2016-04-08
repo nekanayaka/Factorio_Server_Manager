@@ -1,1 +1,5 @@
 .c9/*
+static/uploads/mods/*
+!static/uploads/mods/directory holder
+static/uploads/savegames/*
+!static/uploads/savegames/directory holder
