@@ -23,6 +23,7 @@ app.secret_key = 'pL1+Pl0HJYRaJC7OQp6QxX7yaq90MwxFpqKBNy4hLwY='
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 app.config['ALLOWED_EXTENSIONS'] = set(['zip'])
 
+# wrapper that requires admin users to be logged in
 def login_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
@@ -34,6 +35,7 @@ def login_required(f):
             return redirect(url_for('index'))
     return wrap
 
+# checks the uploaded files extention
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
@@ -43,10 +45,14 @@ def get_directories(a_dir):
     return [name for name in os.listdir(a_dir)
             if os.path.isdir(os.path.join(a_dir, name))]
 """
-
+# if logged in the admin login link disappear from the page
 @app.route('/')
 def index():
-    return render_template('index.html')
+    if 'logged_in' in session:
+        login_status = True
+    else:
+        login_status = False
+    return render_template('index.html', login_status = login_status)
 
 @app.route('/login')
 def login():
@@ -165,7 +171,7 @@ def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 """
 
-app.run(host = os.getenv('IP', '0.0.0.0'), port = int(os.getenv('PORT', 8080)), debug = True)
+#app.run(host = os.getenv('IP', '0.0.0.0'), port = int(os.getenv('PORT', 8080)), debug = True)
 
 if __name__ == '__main__':
     app.run(debug = True)

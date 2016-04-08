@@ -17,8 +17,13 @@
     {% endwith %}
     <img src="/static/images/factoriologo.jpg" alt=""/>
     <div id="adminPanel">
-      <a href="{{url_for('login')}}">Admin Login</a><br /><br />
-      <a href="{{url_for('control')}}">Control Panel</a>
+      {% if login_status == False %}
+        <a href="{{url_for('login')}}">Admin Login</a><br /><br />
+      {% endif %}
+      <a href="{{url_for('control')}}">Control Panel</a><br /><br />
+      {% if login_status == True %}
+        <a href="{{url_for('logout')}}">Logout</a>
+      {% endif %}
     </div>
     <div id="header">
       <h1>Factorio Server Stats</h1>
