@@ -65,11 +65,11 @@ def index():
     global username
     username = []
     for word in username_peer_dump_array:
-            if(word.startswith('peer(') == True):
+            if(word.startswith('username') == True):
                     word_index = username_peer_dump_array.index(word)
                     #peer.append()
-                    peer.extend([word, username_peer_dump_array[word_index + 1]])
-    print str(peer).strip('[]')
+                    username.extend([word, username_peer_dump_array[word_index - 1]])
+    print str(username).strip('[]')
     #       print word
     #for xpeer in peer:
     #       print xpeer
