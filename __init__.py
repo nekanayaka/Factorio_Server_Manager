@@ -54,22 +54,22 @@ def index():
         login_status = False
 
     system_output = commands.getstatusoutput("grep username ~/factorio/factorio-current.log")
+    system_output_grep = commands.getstatusoutput("grep 'success(true)' ~/factorio/factorio-current.log | grep removing | grep network | awk '{print $6}'")
     #game_status = re.findall(r"'(.*?)'", system_output, re.DOTALL)
     #system_output = "{}".format(system_output)
     #game_status = system_output[system_output.find("'")+1:system_output.find("'")]
-    username_peer_dump_array = system_output[1].split()
+    print system_output_grep
+    system_output_array_dump = system_output[1].split()
     #username_peer_dump = system_output[1]
     #print str(username_peer_dump_array).strip('[]')
-    global peer
-    peer = []
-    global username
-    username = []
-    for word in username_peer_dump_array:
+    global username_and_peer_array_dump
+    username_and_peer_array_dump = []
+    for word in system_output_array_dump:
             if(word.startswith('username') == True):
-                    word_index = username_peer_dump_array.index(word)
+                    word_index = system_output_array_dump.index(word)
                     #peer.append()
-                    username.extend([word, username_peer_dump_array[word_index - 1]])
-    print str(username).strip('[]')
+                    username_and_peer_array_dump.extend([word, system_output_array_dump[word_index - 1]])
+    print str(username_and_peer_array_dump).strip('[]')
     #       print word
     #for xpeer in peer:
     #       print xpeer
@@ -194,7 +194,7 @@ def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 """
 
-#app.run(host = os.getenv('IP', '0.0.0.0'), port = int(os.getenv('PORT', 8080)), debug = True)
+app.run(host = os.getenv('IP', '0.0.0.0'), port = int(os.getenv('PORT', 8080)), debug = True)
 
 if __name__ == '__main__':
     app.run(debug = True)
