@@ -15,6 +15,7 @@ from os.path import *
 from flask import *
 from functools import wraps
 from subprocess import *
+from collections import OrderedDict
 
 app = Flask(__name__)
 
@@ -71,7 +72,8 @@ def index():
                     word_index = system_output_array_dump.index(word)
                     #peer.append()
                     username_and_peer_array_dump.extend([word, system_output_array_dump[word_index - 1]])
-    # print str(username_and_peer_array_dump).strip('[]')
+    username_and_peer_array_dump = list(OrderedDict.fromkeys(username_and_peer_array_dump))
+    #print str(username_and_peer_array_dump).strip('[]')
     global removed_users
     removed_users = []
     global removed_peers
@@ -80,12 +82,22 @@ def index():
         if (peer in username_and_peer_array_dump):
             removed_peers.append(peer)
     #print removed_peers
-    
+    global all_users
+    all_users = []
+    all_users_dump = []
     for index, user in enumerate(username_and_peer_array_dump):
         # print index, user
         if(user in removed_peers):
             removed_users.append(username_and_peer_array_dump[index - 1])
-    print removed_users
+        if(index%2 == 0):
+            all_users_dump.append(user)
+    #print removed_users
+    # print all_users
+    for user in all_users_dump:
+        user_stripped = user[user.find("(")+1:user.find(")")]
+        all_users.append(user_stripped)
+        
+    print all_users
         
     # removed_users = (removed_peers == str(removed_peers_array_dump).strip('[]') for removed_peers in str(username_and_peer_array_dump).strip('[]'))
     # for value in g:
@@ -102,7 +114,7 @@ def index():
     #       print xpeer
     #print system_output[1]
     #print system_output[1].find("peer(")
-    return render_template('index.html', login_status = login_status)
+    return render_template('index.html', login_status = login_status, all_users = all_users)
 
 @app.route('/login')
 def login():
