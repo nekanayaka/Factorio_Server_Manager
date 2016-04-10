@@ -89,16 +89,14 @@ def index():
         # print index, user
         if(user in removed_peers):
             removed_users.append(username_and_peer_array_dump[index - 1])
-        if(index%2 == 0):
+        if(index%2 == 0 and not(user in removed_peers)):
             all_users_dump.append(user)
-    #print removed_users
-    # print all_users
+    # print removed_users
     for user in all_users_dump:
         user_stripped = user[user.find("(")+1:user.find(")")]
         all_users.append(user_stripped)
         
-    print all_users
-        
+    print all_users   
     # removed_users = (removed_peers == str(removed_peers_array_dump).strip('[]') for removed_peers in str(username_and_peer_array_dump).strip('[]'))
     # for value in g:
         # print value
