@@ -10,9 +10,16 @@
     float: right;
 }
 
-#loginForm {
+/*#loginForm {
 
+}**/
+
+#playerList table {
+  height: auto;
+  width: auto;
+  margin: 0 auto;
 }
+
 
 #uploadSave {
   text-align: center;
