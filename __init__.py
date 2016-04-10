@@ -58,8 +58,10 @@ def index():
     #game_status = re.findall(r"'(.*?)'", system_output, re.DOTALL)
     #system_output = "{}".format(system_output)
     #game_status = system_output[system_output.find("'")+1:system_output.find("'")]
-    print system_output_grep
+    #print system_output_grep
+    removed_peers_array_dump = system_output_grep[1].split()
     system_output_array_dump = system_output[1].split()
+    # print removed_peers_array_dump[0]
     #username_peer_dump = system_output[1]
     #print str(username_peer_dump_array).strip('[]')
     global username_and_peer_array_dump
@@ -69,7 +71,32 @@ def index():
                     word_index = system_output_array_dump.index(word)
                     #peer.append()
                     username_and_peer_array_dump.extend([word, system_output_array_dump[word_index - 1]])
-    print str(username_and_peer_array_dump).strip('[]')
+    # print str(username_and_peer_array_dump).strip('[]')
+    global removed_users
+    removed_users = []
+    global removed_peers
+    removed_peers = []
+    for peer in removed_peers_array_dump:
+        if (peer in username_and_peer_array_dump):
+            removed_peers.append(peer)
+    #print removed_peers
+    
+    for index, user in enumerate(username_and_peer_array_dump):
+        # print index, user
+        if(user in removed_peers):
+            removed_users.append(username_and_peer_array_dump[index - 1])
+    print removed_users
+        
+    # removed_users = (removed_peers == str(removed_peers_array_dump).strip('[]') for removed_peers in str(username_and_peer_array_dump).strip('[]'))
+    # for value in g:
+        # print value
+    # print str(removed_users).strip('[]')
+    
+    # raise
+    #print removed_peers_array_dump
+    # print len(removed_peers_array_dump)
+    
+    #print str(removed_users).strip('[]')
     #       print word
     #for xpeer in peer:
     #       print xpeer
@@ -105,7 +132,7 @@ def control():
     """
     all_zipped = glob.glob(mods_path + '/*.zip')
     all_mods = [basename(mod_zip) for mod_zip in all_zipped]
-    cmd = shlex.split("ps aux | grep factorio/bin/x64 | grep -v grep | awk '{print $2}'")
+    #cmd = shlex.split("ps aux | grep factorio/bin/x64 | grep -v grep | awk '{print $2}'")
     system_output = commands.getstatusoutput("ps aux | grep factorio/bin/x64 | grep -v grep | awk '{print $2}'")
     # print cmd
     # game_status = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
