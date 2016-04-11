@@ -95,17 +95,17 @@ def index():
     for user in all_users_dump:
         user_stripped = user[user.find("(")+1:user.find(")")]
         all_users.append(user_stripped)
-        
-    print all_users   
+
+    #print all_users
     # removed_users = (removed_peers == str(removed_peers_array_dump).strip('[]') for removed_peers in str(username_and_peer_array_dump).strip('[]'))
     # for value in g:
         # print value
     # print str(removed_users).strip('[]')
-    
+
     # raise
     #print removed_peers_array_dump
     # print len(removed_peers_array_dump)
-    
+
     #print str(removed_users).strip('[]')
     #       print word
     #for xpeer in peer:
@@ -133,6 +133,25 @@ def control():
     savegames_path = app.config['UPLOAD_FOLDER'] + "savegames"
     mods_path = app.config['UPLOAD_FOLDER'] + "mods"
     all_savegames = os.listdir(savegames_path)
+    get_savegame_stats_cmd = commands.getstatusoutput("ls -l static/uploads/savegames | awk '{print $6,$7,$8,$9}'")
+    # print get_savegame_stats_cmd[1]
+    savegame_list = get_savegame_stats_cmd[1].split()
+    # savegames_with_time = []
+    # for index, element in enumerate(savegame_list):
+    #     savegame_and_time.append(index)
+    savegame_and_time = [[savegame_list[element], str(savegame_list[element - 3]) + " " + str(savegame_list[element - 2]) + " " + str(savegame_list[element - 1])] * 1 for element in xrange(3, len(savegame_list), 4)]
+    # print savegame_and_time[3][1]
+    # for element in xrange(3, len(savegame_list), 4):
+        # print savegame_list[element]
+        # print str(savegame_list[element - 3]) + " " + str(savegame_list[element - 2]) + " " + str(savegame_list[element - 1])
+        # print element
+        # savegame_and_time.append([savegame_list[element], str(savegame_list[element - 3]) + " " + str(savegame_list[element - 2]) + " " + str(savegame_list[element - 1])])
+
+    #print savegame_list
+    # print all_savegames
+    # savegames_with_time = glob.glob(savegames_path + "/" + "*")
+    # savegames_with_time.sort(key = os.path.getmtime)
+    # print savegames_with_time
     all_folders = os.walk(mods_path).next()[1]
     """
     for file in os.listdir(mods_path):
@@ -148,12 +167,12 @@ def control():
     # game_status = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
     # game_status = subprocess.Popen(['ps', 'aux', '|', 'grep', 'factorio/bin/x64', '|', 'grep', '-v', 'grep', '|', 'awk', '\'{print $2}\''], stdout=subprocess.PIPE).communicate()[0]
     game_status = system_output[1]
-    print game_status
+    #print game_status
     # if game_status != "(0, '')":
     #     return render_template('control.html', all_savegames = all_savegames, all_folders = all_folders, all_mods = all_mods, game_status = game_status)
     # else:
     #     return render_template('control.html', all_savegames = all_savegames, all_folders = all_folders, all_mods = all_mods)
-    return render_template('control.html', all_savegames = all_savegames, all_folders = all_folders, all_mods = all_mods, game_status = game_status)
+    return render_template('control.html', all_savegames = all_savegames, all_folders = all_folders, all_mods = all_mods, game_status = game_status, savegame_and_time = savegame_and_time)
     # return render_template('control.html', all_savegames = all_savegames, all_folders = all_folders, all_mods = all_mods)
 
 
@@ -231,7 +250,7 @@ def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 """
 
-app.run(host = os.getenv('IP', '0.0.0.0'), port = int(os.getenv('PORT', 8080)), debug = True)
+#app.run(host = os.getenv('IP', '0.0.0.0'), port = int(os.getenv('PORT', 8080)), debug = True)
 
 if __name__ == '__main__':
     app.run(debug = True)
