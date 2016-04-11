@@ -40,17 +40,17 @@
       <h3>Savegame list</h3>
       <ul>
         {% for savegame, time in savegame_and_time %}
-          <li>{{savegame + " " + time}} &#09; <a href="{{url_for('deleteSave', savegame = savegame)}}">delete</a> &#09; <a href="{{url_for('runGame', savegame = savegame)}}">run</a></li>
+          <li>{{savegame}} &nbsp;&nbsp;&nbsp;&nbsp; {{time}} &nbsp;&nbsp; <a href="{{url_for('deleteSave', savegame = savegame)}}">delete</a> &#09; <a href="{{url_for('runGame', savegame = savegame)}}">run</a></li>
         {% endfor %}
       </ul>
 
       <h3>Mods list</h3>
       <ul>
         {% for mod in all_mods %}
-          <li>{{mod}} &#09; <a href="{{url_for('deleteMod', mod = mod)}}">delete</a> &#09; <a href="{{url_for('extractArchive', zipFile = mod)}}">extract</a></li>
+          <li>{{mod}} &nbsp;&nbsp; <a href="{{url_for('deleteMod', mod = mod)}}">delete</a> &nbsp;&nbsp; <a href="{{url_for('extractArchive', zipFile = mod)}}">extract</a></li>
         {% endfor %}
         {% for mod_folder in all_folders %}
-          <li>{{mod_folder}} &#09; <a href="{{url_for('deleteFolder', mod_folder = mod_folder)}}">delete folder</a></li>
+          <li>{{mod_folder}} &nbsp;&nbsp; <a href="{{url_for('deleteFolder', mod_folder = mod_folder)}}">delete folder</a></li>
         {% endfor %}
       </ul>
     </div>
