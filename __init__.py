@@ -132,20 +132,20 @@ def loginSubmit():
 def control():
     savegames_path = app.config['UPLOAD_FOLDER'] + "savegames"
     mods_path = app.config['UPLOAD_FOLDER'] + "mods"
-    all_savegames = os.listdir(savegames_path)
+    # all_savegames = os.listdir(savegames_path)
     get_savegame_stats_cmd = commands.getstatusoutput("ls -l static/uploads/savegames | awk '{print $6,$7,$8,$9}'")
     # print get_savegame_stats_cmd[1]
     savegame_list = get_savegame_stats_cmd[1].split()
     # savegames_with_time = []
     # for index, element in enumerate(savegame_list):
-    #     savegame_and_time.append(index)
-    savegame_and_time = [[savegame_list[element], str(savegame_list[element - 3]) + " " + str(savegame_list[element - 2]) + " " + str(savegame_list[element - 1])] * 1 for element in xrange(3, len(savegame_list), 4)]
-    # print savegame_and_time[3][1]
+    #     all_savegames.append(index)
+    all_savegames = [[savegame_list[element], str(savegame_list[element - 3]) + " " + str(savegame_list[element - 2]) + " " + str(savegame_list[element - 1])] * 1 for element in xrange(3, len(savegame_list), 4)]
+    # print all_savegames[3][1]
     # for element in xrange(3, len(savegame_list), 4):
         # print savegame_list[element]
         # print str(savegame_list[element - 3]) + " " + str(savegame_list[element - 2]) + " " + str(savegame_list[element - 1])
         # print element
-        # savegame_and_time.append([savegame_list[element], str(savegame_list[element - 3]) + " " + str(savegame_list[element - 2]) + " " + str(savegame_list[element - 1])])
+        # all_savegames.append([savegame_list[element], str(savegame_list[element - 3]) + " " + str(savegame_list[element - 2]) + " " + str(savegame_list[element - 1])])
 
     #print savegame_list
     # print all_savegames
@@ -172,7 +172,7 @@ def control():
     #     return render_template('control.html', all_savegames = all_savegames, all_folders = all_folders, all_mods = all_mods, game_status = game_status)
     # else:
     #     return render_template('control.html', all_savegames = all_savegames, all_folders = all_folders, all_mods = all_mods)
-    return render_template('control.html', all_savegames = all_savegames, all_folders = all_folders, all_mods = all_mods, game_status = game_status, savegame_and_time = savegame_and_time)
+    return render_template('control.html', all_mods = all_mods, all_folders = all_folders, game_status = game_status, all_savegames = all_savegames)
     # return render_template('control.html', all_savegames = all_savegames, all_folders = all_folders, all_mods = all_mods)
 
 

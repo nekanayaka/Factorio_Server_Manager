@@ -39,7 +39,7 @@
     <div id="lists" style="text-align: left;">
       <h3>Savegame list</h3>
       <ul>
-        {% for savegame, time in savegame_and_time %}
+        {% for savegame, time in all_savegames %}
           <li>{{savegame}} &nbsp;&nbsp;&nbsp;&nbsp; {{time}} &nbsp;&nbsp; <a href="{{url_for('deleteSave', savegame = savegame)}}">delete</a> &#09; <a href="{{url_for('runGame', savegame = savegame)}}">run</a></li>
         {% endfor %}
       </ul>
