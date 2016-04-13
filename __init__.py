@@ -54,7 +54,7 @@ def index():
     else:
         login_status = False
 
-    system_output = commands.getstatusoutput("grep username ~/factorio/factorio-current.log")
+    system_output = commands.getstatusoutput("grep username /home/nimna/factorio/factorio-current.log")
     system_output_grep = commands.getstatusoutput("grep 'success(true)' ~/factorio/factorio-current.log | grep removing | grep network | awk '{print $6}'")
     #game_status = re.findall(r"'(.*?)'", system_output, re.DOTALL)
     #system_output = "{}".format(system_output)
@@ -231,7 +231,7 @@ def extractArchive(zipFile):
 
 @app.route('/runGame/<savegame>')
 def runGame(savegame):
-    os.system('~/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame + "&")
+    os.system('/home/nimna/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame + "&")
     return redirect(url_for('control'))
 
 @app.route('/stopGame')
@@ -253,5 +253,5 @@ def uploaded_file(filename):
 #app.run(host = os.getenv('IP', '0.0.0.0'), port = int(os.getenv('PORT', 8080)), debug = True)
 
 if __name__ == '__main__':
-    app.run(debug = True)
-    #app.run(host='0.0.0.0')
+    #app.run(debug = True)
+    app.run(host='0.0.0.0')
