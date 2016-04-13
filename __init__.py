@@ -23,6 +23,7 @@ app.secret_key = 'pL1+Pl0HJYRaJC7OQp6QxX7yaq90MwxFpqKBNy4hLwY='
 
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 app.config['ALLOWED_EXTENSIONS'] = set(['zip'])
+app.config['FACTORIO_INSTALLATION'] = "/home/nimna/factorio/"
 
 # wrapper that requires admin users to be logged in
 def login_required(f):
@@ -54,8 +55,11 @@ def index():
     else:
         login_status = False
 
-    system_output = commands.getstatusoutput("grep username /home/nimna/factorio/factorio-current.log")
-    system_output_grep = commands.getstatusoutput("grep 'success(true)' ~/factorio/factorio-current.log | grep removing | grep network | awk '{print $6}'")
+    system_output = commands.getstatusoutput("grep username " + app.config['FACTORIO_INSTALLATION'] + "factorio-current.log")
+    system_output_grep = commands.getstatusoutput("grep 'success(true)' " + app.config['FACTORIO_INSTALLATION'] + "factorio-current.log | grep removing | grep network | awk '{print $6}'")
+    system_output_peer_address = commands.getstatusoutput("grep 'address' factorio-current.log | grep 'adding peer(' | awk '{print $6,$7}'")
+    peer_and_ip = system_output_peer_address[1].split()
+    # print peer_and_ip
     #game_status = re.findall(r"'(.*?)'", system_output, re.DOTALL)
     #system_output = "{}".format(system_output)
     #game_status = system_output[system_output.find("'")+1:system_output.find("'")]
@@ -85,17 +89,30 @@ def index():
     global all_users
     all_users = []
     all_users_dump = []
+    
+    
     for index, user in enumerate(username_and_peer_array_dump):
         # print index, user
         if(user in removed_peers):
             removed_users.append(username_and_peer_array_dump[index - 1])
-        if(index%2 == 0 and not(user in removed_peers)):
+        if(index%2 == 0 and not(user in removed_users)):
             all_users_dump.append(user)
+    
+    # fuck it
+    # all_users_dump = [[peer_and_ip[element], peer_and_ip[element + 1], all_users] * 1 for element in xrange(0, len(peer_and_ip))]
+    # raise
     # print removed_users
     for user in all_users_dump:
-        user_stripped = user[user.find("(")+1:user.find(")")]
-        all_users.append(user_stripped)
+    	user_stripped = user[user.find("(")+1:user.find(")")]
+    	if user_stripped != "<server>":
+    		all_users.append(user_stripped)
 
+	# all_ips = []
+	# for i,ip in enumerate(peer_and_ip):
+	# 	if i%2 != 0:
+	# 		ip_stripped = ip[ip.find("(")+1:ip.find(")")]
+	# 		all_ips.append(ip_stripped)
+	# print all_ips
     #print all_users
     # removed_users = (removed_peers == str(removed_peers_array_dump).strip('[]') for removed_peers in str(username_and_peer_array_dump).strip('[]'))
     # for value in g:
@@ -112,6 +129,7 @@ def index():
     #       print xpeer
     #print system_output[1]
     #print system_output[1].find("peer(")
+    # return render_template('index.html', login_status = login_status, all_users = all_users, all_ips = all_ips)
     return render_template('index.html', login_status = login_status, all_users = all_users)
 
 @app.route('/login')
@@ -162,7 +180,7 @@ def control():
     all_zipped = glob.glob(mods_path + '/*.zip')
     all_mods = [basename(mod_zip) for mod_zip in all_zipped]
     #cmd = shlex.split("ps aux | grep factorio/bin/x64 | grep -v grep | awk '{print $2}'")
-    system_output = commands.getstatusoutput("ps aux | grep factorio/bin/x64 | grep -v grep | awk '{print $2}'")
+    system_output = commands.getstatusoutput("ps aux | grep " + app.config['FACTORIO_INSTALLATION'] + "bin/x64 | grep -v grep | awk '{print $2}'")
     # print cmd
     # game_status = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
     # game_status = subprocess.Popen(['ps', 'aux', '|', 'grep', 'factorio/bin/x64', '|', 'grep', '-v', 'grep', '|', 'awk', '\'{print $2}\''], stdout=subprocess.PIPE).communicate()[0]
@@ -231,13 +249,13 @@ def extractArchive(zipFile):
 
 @app.route('/runGame/<savegame>')
 def runGame(savegame):
-    os.system('/home/nimna/factorio/bin/x64/./factorio --disallow-commands --start-server ' + savegame + "&")
+    os.system(app.config['FACTORIO_INSTALLATION'] + 'bin/x64/./factorio --disallow-commands --start-server ' + savegame + "&")
     return redirect(url_for('control'))
 
 @app.route('/stopGame')
 def stopGame():
     #works for multiple running instances of factorio. just has to grep the unique the factorio directory path
-    os.system("kill -9 `ps aux | grep factorio/bin/x64 | grep -v grep | awk '{print $2}'`")
+    os.system("kill -9 `ps aux | grep " + app.config['FACTORIO_INSTALLATION'] + "bin/x64 | grep -v grep | awk '{print $2}'`")
     #print("kill -9 `ps aux | grep " +  savegame_running + " | grep -v grep | awk '{print $2}'`")
     #works if only one version of factorio running
     #os.system("kill -9 pidof factorio")
@@ -253,5 +271,5 @@ def uploaded_file(filename):
 #app.run(host = os.getenv('IP', '0.0.0.0'), port = int(os.getenv('PORT', 8080)), debug = True)
 
 if __name__ == '__main__':
-    #app.run(debug = True)
     app.run(host='0.0.0.0')
+    #app.run(host='0.0.0.0', port = 8080, debug = True)
