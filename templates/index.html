@@ -15,6 +15,7 @@
         <!--</ul>-->
       {% endif %}
     {% endwith %}
+    <!-- <img src="/static/images/factoriologo.jpg" style="margin: 0 auto; display: block;" alt=""/> -->
     <img src="/static/images/factoriologo.jpg" alt=""/>
     <div id="adminPanel">
       {% if login_status == False %}
@@ -28,8 +29,12 @@
     <div id="header">
       <h1>Factorio Server Stats</h1>
     </div>
+    <h3 style="text-align: center;">All players online</h3>
     <div id="playerList">
       <table>
+      	<tr>
+      		<td><strong>Player</strong></td>
+      	</tr>
         {% for user in all_users %}
           <tr>
             <td>{{user}}</td>
