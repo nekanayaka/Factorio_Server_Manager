@@ -11,6 +11,7 @@ import subprocess
 import commands
 import shlex
 import re
+import sys
 from os.path import *
 from flask import *
 from functools import wraps
@@ -24,6 +25,10 @@ app.secret_key = 'pL1+Pl0HJYRaJC7OQp6QxX7yaq90MwxFpqKBNy4hLwY='
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 app.config['ALLOWED_EXTENSIONS'] = set(['zip'])
 app.config['FACTORIO_INSTALLATION'] = "/home/nimna/factorio/"
+
+# setting the default encoding to utf-8 so it fixes the decode error.
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
 # wrapper that requires admin users to be logged in
 def login_required(f):
@@ -271,5 +276,5 @@ def uploaded_file(filename):
 #app.run(host = os.getenv('IP', '0.0.0.0'), port = int(os.getenv('PORT', 8080)), debug = True)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug = True)
     #app.run(host='0.0.0.0', port = 8080, debug = True)
